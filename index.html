@@ -883,10 +883,19 @@
             observer.observe(el);
         });
 
-        // Hero animation on load
-        window.addEventListener('load', () => {
-            document.querySelector('.hero').classList.add('visible');
-        });
+        // Hero animation on load - with fallback
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        document.querySelector('.hero').classList.add('visible');
+    }, 100);
+});
+
+// Fallback if DOMContentLoaded already fired
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(() => {
+        document.querySelector('.hero').classList.add('visible');
+    }, 100);
+}
     </script>
 </body>
 </html>
