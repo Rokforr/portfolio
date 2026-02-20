@@ -4,10 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rostyslav Melnyk — UI/UX Designer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <style>
+        /* ==================== CUSTOM FONTS ==================== */
+        @font-face {
+            font-family: 'Codec Pro';
+            src: url('./fonts/CodecPro-News.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Codec Pro';
+            src: url('./fonts/CodecPro-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Codec Pro';
+            src: url('./fonts/CodecPro-ExtraBold.woff2') format('woff2');
+            font-weight: 800;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Antikor Text';
+            src: url('./fonts/AntikorText-Light.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Antikor Text';
+            src: url('./fonts/AntikorText-Book.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Antikor Text';
+            src: url('./fonts/AntikorText-Regular.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -27,7 +69,8 @@
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Antikor Text', sans-serif;
+            font-weight: 400;
             background: var(--bg-light);
             color: var(--text-dark);
             overflow-x: hidden;
@@ -88,7 +131,7 @@
         }
 
         .logo {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Codec Pro', sans-serif;
             font-size: 1.5rem;
             font-weight: 700;
             letter-spacing: -0.02em;
@@ -99,6 +142,7 @@
         nav a {
             color: var(--text-dark);
             text-decoration: none;
+            font-family: 'Antikor Text', sans-serif;
             font-size: 1.1rem;
             font-weight: 500;
             position: relative;
@@ -129,41 +173,49 @@
         }
 
         .hero-label {
+            font-family: 'Antikor Text', sans-serif;
             font-size: 0.875rem;
+            font-weight: 500;
             color: var(--gray);
             margin-bottom: 24px;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
         }
 
-        .hero h1 {
-            font-family: 'Space Grotesk', sans-serif;
+        .hero-headline {
+            font-family: 'Codec Pro', sans-serif;
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 700;
-            line-height: 1.05;
+            line-height: 1.1;
             margin-bottom: 32px;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease 0.2s;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.25em;
+        }
+
+        .word-wrapper {
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .word {
+            display: inline-block;
+        }
+
+        .char {
+            display: inline-block;
         }
 
         .hero-description {
+            font-family: 'Antikor Text', sans-serif;
             font-size: 1.25rem;
+            font-weight: 400;
             color: var(--gray);
             max-width: 500px;
+            line-height: 1.6;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease 0.4s;
-        }
-
-        .hero.visible .hero-label,
-        .hero.visible h1,
-        .hero.visible .hero-description {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         /* ==================== SCROLL ANIMATIONS ==================== */
@@ -194,6 +246,33 @@
             transform: translateY(0);
         }
 
+        /* ==================== CASCADE TITLE ANIMATION ==================== */
+        .cascade-title {
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .cascade-title .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cascade-title .space {
+            width: 0.3em;
+        }
+
+        .cascade-title.visible .char {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cascade-title.center {
+            justify-content: center;
+        }
+
         /* ==================== PROJECTS (DARK) ==================== */
         .projects {
             background: var(--bg-dark);
@@ -202,24 +281,10 @@
         }
 
         .section-title {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Codec Pro', sans-serif;
             font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 700;
             margin-bottom: 80px;
-        }
-
-        .title-reveal {
-            overflow: hidden;
-        }
-
-        .title-reveal span {
-            display: inline-block;
-            transform: translateY(100%);
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .title-reveal.visible span {
-            transform: translateY(0);
         }
 
         .projects-container {
@@ -259,7 +324,6 @@
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Progress bar on bottom border */
         .project-item::after {
             content: '';
             position: absolute;
@@ -278,7 +342,6 @@
         .project-item:hover::after {
             animation: none;
             width: 100%;
-            background: var(--text-light);
         }
 
         @keyframes progressBar {
@@ -295,13 +358,14 @@
         }
 
         .project-name {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Codec Pro', sans-serif;
             font-size: 2rem;
-            font-weight: 600;
+            font-weight: 700;
             transition: transform var(--transition);
         }
 
         .project-number {
+            font-family: 'Antikor Text', sans-serif;
             font-size: 0.75rem;
             color: var(--gray);
             margin-bottom: 8px;
@@ -315,6 +379,7 @@
         }
 
         .project-tag {
+            font-family: 'Antikor Text', sans-serif;
             font-size: 0.75rem;
             color: var(--gray);
             padding: 4px 12px;
@@ -323,10 +388,17 @@
         }
 
         .project-arrow {
-            font-size: 2.5rem; /* BIGGER */
             opacity: 0;
             transform: translateX(-20px);
             transition: all var(--transition);
+        }
+
+        .project-arrow svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--text-light);
+            stroke-width: 2;
+            fill: none;
         }
 
         .project-item:hover .project-name {
@@ -338,7 +410,6 @@
             transform: translateX(0);
         }
 
-        /* Active state for auto-rotation */
         .project-item.active .project-name {
             transform: translateX(12px);
         }
@@ -380,14 +451,15 @@
         }
 
         .service-number {
+            font-family: 'Antikor Text', sans-serif;
             font-size: 0.875rem;
             color: var(--gray);
         }
 
         .service-name {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Codec Pro', sans-serif;
             font-size: 1.75rem;
-            font-weight: 600;
+            font-weight: 700;
             transition: transform var(--transition);
         }
 
@@ -398,12 +470,13 @@
         .service-toggle {
             width: 32px;
             height: 32px;
-            border: 1px solid var(--text-dark);
+            border: 2px solid var(--text-dark);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
+            font-weight: 300;
             transition: all var(--transition);
         }
 
@@ -422,6 +495,7 @@
         .service-item.active .service-content { max-height: 300px; }
 
         .service-description {
+            font-family: 'Antikor Text', sans-serif;
             padding: 0 0 32px 80px;
             color: var(--gray);
             line-height: 1.7;
@@ -458,13 +532,14 @@
         }
 
         .about-content h2 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Codec Pro', sans-serif;
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 700;
             margin-bottom: 32px;
         }
 
         .about-text {
+            font-family: 'Antikor Text', sans-serif;
             color: rgba(255,255,255,0.7);
             line-height: 1.8;
             margin-bottom: 24px;
@@ -479,6 +554,7 @@
         }
 
         .skill-tag {
+            font-family: 'Antikor Text', sans-serif;
             padding: 8px 20px;
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 24px;
@@ -499,13 +575,14 @@
         }
 
         .contact h2 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Codec Pro', sans-serif;
             font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 700;
             margin-bottom: 24px;
         }
 
         .contact-subtitle {
+            font-family: 'Antikor Text', sans-serif;
             color: var(--gray);
             font-size: 1.25rem;
             margin-bottom: 48px;
@@ -520,10 +597,32 @@
         .contact-link {
             color: var(--text-dark);
             text-decoration: none;
-            font-size: 1.1rem;
+            font-family: 'Antikor Text', sans-serif;
+            font-size: 1.35rem;
             font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             position: relative;
             padding: 8px 0;
+        }
+
+        .contact-link .arrow {
+            display: inline-flex;
+            transition: transform var(--transition);
+        }
+
+        .contact-link .arrow svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-dark);
+            stroke-width: 2;
+            fill: none;
+            transform: rotate(-45deg);
+        }
+
+        .contact-link:hover .arrow svg {
+            transform: rotate(0deg);
         }
 
         .contact-link::after {
@@ -549,11 +648,16 @@
             justify-content: space-between;
         }
 
-        .footer-copy { font-size: 0.875rem; color: var(--gray); }
+        .footer-copy { 
+            font-family: 'Antikor Text', sans-serif;
+            font-size: 0.875rem; 
+            color: var(--gray); 
+        }
 
         .footer-links { display: flex; gap: 32px; }
 
         .footer-links a {
+            font-family: 'Antikor Text', sans-serif;
             color: var(--gray);
             text-decoration: none;
             font-size: 0.875rem;
@@ -598,12 +702,17 @@
 
     <section class="hero">
         <p class="hero-label">UI/UX Designer</p>
-        <h1>Creating intuitive digital experiences</h1>
+        <h1 class="hero-headline">
+            <span class="word-wrapper"><span class="word">Creating</span></span>
+            <span class="word-wrapper"><span class="word">intuitive</span></span>
+            <span class="word-wrapper"><span class="word">digital</span></span>
+            <span class="word-wrapper"><span class="word">experiences</span></span>
+        </h1>
         <p class="hero-description">I design user-centered products with clean visual systems — from user flows and wireframes to polished interfaces.</p>
     </section>
 
     <section class="projects" id="projects">
-        <h2 class="section-title title-reveal animate-on-scroll"><span>Selected Works</span></h2>
+        <h2 class="section-title cascade-title animate-on-scroll">Selected Works</h2>
         <div class="projects-container">
             <div class="projects-image animate-on-scroll">
                 <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/12b6a4243600769.67cdd98b7b1b4.jpg" alt="Pulse" class="project-img active" data-project="pulse">
@@ -621,7 +730,12 @@
                                 <span class="project-tag">Event Discovery</span>
                             </div>
                         </div>
-                        <span class="project-arrow">→</span>
+                        <span class="project-arrow">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="4" y1="12" x2="20" y2="12"></line>
+                                <polyline points="14 6 20 12 14 18"></polyline>
+                            </svg>
+                        </span>
                     </a>
                 </div>
                 <div class="project-item" data-project="pawpal">
@@ -634,7 +748,12 @@
                                 <span class="project-tag">Pet Care</span>
                             </div>
                         </div>
-                        <span class="project-arrow">→</span>
+                        <span class="project-arrow">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="4" y1="12" x2="20" y2="12"></line>
+                                <polyline points="14 6 20 12 14 18"></polyline>
+                            </svg>
+                        </span>
                     </a>
                 </div>
                 <div class="project-item" data-project="coffee">
@@ -647,7 +766,12 @@
                                 <span class="project-tag">Mobile App</span>
                             </div>
                         </div>
-                        <span class="project-arrow">→</span>
+                        <span class="project-arrow">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="4" y1="12" x2="20" y2="12"></line>
+                                <polyline points="14 6 20 12 14 18"></polyline>
+                            </svg>
+                        </span>
                     </a>
                 </div>
             </div>
@@ -655,7 +779,7 @@
     </section>
 
     <section class="services" id="services">
-        <h2 class="section-title title-reveal animate-on-scroll"><span>Services</span></h2>
+        <h2 class="section-title cascade-title animate-on-scroll">Services</h2>
         <div class="services-list stagger-children">
             <div class="service-item">
                 <div class="service-header">
@@ -714,7 +838,7 @@
                 <img src="https://via.placeholder.com/400x533/1a1a1a/666?text=Your+Photo" alt="Rostyslav Melnyk">
             </div>
             <div class="about-content">
-                <h2 class="title-reveal animate-on-scroll"><span>About Me</span></h2>
+                <h2 class="cascade-title animate-on-scroll">About Me</h2>
                 <p class="about-text animate-on-scroll">I'm a UI/UX Designer with 1+ year of experience creating mobile and web interfaces. My background in commercial photography gives me a strong eye for composition and visual storytelling.</p>
                 <p class="about-text animate-on-scroll">I believe in user-centered design that balances aesthetics with functionality.</p>
                 <div class="about-skills animate-on-scroll">
@@ -731,12 +855,36 @@
     </section>
 
     <section class="contact" id="contact">
-        <h2 class="title-reveal animate-on-scroll"><span>Let's Work Together</span></h2>
+        <h2 class="cascade-title center animate-on-scroll">Let's Work Together</h2>
         <p class="contact-subtitle animate-on-scroll">Have a project in mind? Let's create something great.</p>
         <div class="contact-links animate-on-scroll">
-            <a href="mailto:rokfor345@gmail.com" class="contact-link">Email</a>
-            <a href="https://www.linkedin.com/in/rostyslav-m-1855a321a" target="_blank" class="contact-link">LinkedIn</a>
-            <a href="https://www.behance.net/rokfor_" target="_blank" class="contact-link">Behance</a>
+            <a href="mailto:rokfor345@gmail.com" class="contact-link">
+                Email 
+                <span class="arrow">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="4" y1="12" x2="20" y2="12"></line>
+                        <polyline points="14 6 20 12 14 18"></polyline>
+                    </svg>
+                </span>
+            </a>
+            <a href="https://www.linkedin.com/in/rostyslav-m-1855a321a" target="_blank" class="contact-link">
+                LinkedIn 
+                <span class="arrow">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="4" y1="12" x2="20" y2="12"></line>
+                        <polyline points="14 6 20 12 14 18"></polyline>
+                    </svg>
+                </span>
+            </a>
+            <a href="https://www.behance.net/rokfor_" target="_blank" class="contact-link">
+                Behance 
+                <span class="arrow">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="4" y1="12" x2="20" y2="12"></line>
+                        <polyline points="14 6 20 12 14 18"></polyline>
+                    </svg>
+                </span>
+            </a>
         </div>
     </section>
 
@@ -749,6 +897,61 @@
     </footer>
 
     <script>
+        // ==================== GSAP HERO ANIMATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Split words into characters
+            const words = document.querySelectorAll('.hero-headline .word');
+            
+            words.forEach(word => {
+                const text = word.textContent;
+                word.innerHTML = '';
+                
+                for (let char of text) {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = char;
+                    word.appendChild(span);
+                }
+            });
+
+            // Get elements
+            const chars = document.querySelectorAll('.hero-headline .char');
+            const heroLabel = document.querySelector('.hero-label');
+            const heroDescription = document.querySelector('.hero-description');
+
+            // Set initial state
+            gsap.set(chars, { y: '100%' });
+            gsap.set(heroLabel, { opacity: 0, y: 20 });
+            gsap.set(heroDescription, { opacity: 0, y: 20 });
+
+            // Create animation timeline
+            const tl = gsap.timeline({ delay: 0.5 });
+
+            // Animate label
+            tl.to(heroLabel, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: 'power2.out'
+            });
+
+            // Animate characters with stagger
+            tl.to(chars, {
+                y: '0%',
+                duration: 0.6,
+                stagger: 0.02,
+                ease: 'power3.out'
+            }, '-=0.3');
+
+            // Animate description
+            tl.to(heroDescription, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: 'power2.out'
+            }, '-=0.3');
+        });
+
         // ==================== CUSTOM CURSOR ====================
         const cursor = document.querySelector('.cursor');
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
@@ -759,7 +962,6 @@
         });
 
         function animateCursor() {
-            // Faster cursor movement (0.2 instead of 0.15)
             cursorX += (mouseX - cursorX) * 0.2;
             cursorY += (mouseY - cursorY) * 0.2;
             cursor.style.left = cursorX + 'px';
@@ -768,7 +970,7 @@
         }
         animateCursor();
 
-        // Interactive elements - big filled cursor
+        // Interactive elements
         const interactiveElements = document.querySelectorAll('a, button, .service-header, .project-item, .skill-tag');
         
         interactiveElements.forEach(el => {
@@ -781,7 +983,7 @@
             });
         });
 
-        // Text elements - blur effect (including logo)
+        // Text elements - blur effect
         const textElements = document.querySelectorAll('h1, h2, p, .logo, .hero-label, .project-number, .service-number, .footer-copy');
         
         textElements.forEach(el => {
@@ -795,7 +997,7 @@
             });
         });
 
-        // Check if cursor is on dark section
+        // Dark section detection
         const darkSections = document.querySelectorAll('.projects, .about, footer');
         
         function checkDarkSection() {
@@ -816,33 +1018,24 @@
         const projectItems = document.querySelectorAll('.project-item');
         const projectImages = document.querySelectorAll('.project-img');
         let currentProjectIndex = 0;
-        let autoRotateInterval;
         let isHovering = false;
 
         function setActiveProject(index) {
-            // Remove active from all
             projectItems.forEach(item => item.classList.remove('active'));
             projectImages.forEach(img => img.classList.remove('active'));
             
-            // Add active to current
             projectItems[index].classList.add('active');
             const projectId = projectItems[index].dataset.project;
             document.querySelector(`.project-img[data-project="${projectId}"]`).classList.add('active');
         }
 
-        function startAutoRotate() {
-            autoRotateInterval = setInterval(() => {
-                if (!isHovering) {
-                    currentProjectIndex = (currentProjectIndex + 1) % projectItems.length;
-                    setActiveProject(currentProjectIndex);
-                }
-            }, 4000); // 4 seconds per project
-        }
+        setInterval(() => {
+            if (!isHovering) {
+                currentProjectIndex = (currentProjectIndex + 1) % projectItems.length;
+                setActiveProject(currentProjectIndex);
+            }
+        }, 4000);
 
-        // Start auto-rotation
-        startAutoRotate();
-
-        // Pause on hover
         projectItems.forEach((item, index) => {
             item.addEventListener('mouseenter', () => {
                 isHovering = true;
@@ -865,6 +1058,34 @@
             });
         });
 
+        // ==================== CASCADE TITLE ANIMATION ====================
+        function setupCascadeTitle(element) {
+            const text = element.textContent;
+            element.textContent = '';
+            
+            let charIndex = 0;
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const span = document.createElement('span');
+                
+                if (char === ' ') {
+                    span.className = 'char space';
+                    span.innerHTML = '&nbsp;';
+                } else {
+                    span.className = 'char';
+                    span.textContent = char;
+                    span.style.transitionDelay = `${charIndex * 0.03}s`;
+                    charIndex++;
+                }
+                
+                element.appendChild(span);
+            }
+        }
+
+        document.querySelectorAll('.cascade-title').forEach(title => {
+            setupCascadeTitle(title);
+        });
+
         // ==================== SCROLL ANIMATIONS ====================
         const observerOptions = {
             threshold: 0.1,
@@ -879,23 +1100,9 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.animate-on-scroll, .stagger-children, .title-reveal').forEach(el => {
+        document.querySelectorAll('.animate-on-scroll, .stagger-children, .cascade-title').forEach(el => {
             observer.observe(el);
         });
-
-        // Hero animation on load - with fallback
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        document.querySelector('.hero').classList.add('visible');
-    }, 100);
-});
-
-// Fallback if DOMContentLoaded already fired
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    setTimeout(() => {
-        document.querySelector('.hero').classList.add('visible');
-    }, 100);
-}
     </script>
 </body>
 </html>
